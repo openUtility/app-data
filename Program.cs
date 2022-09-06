@@ -28,7 +28,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// disabled for now
+// app.UseHttpsRedirection();
 
 app.MapHealthChecks("/healthz").RequireHost("*:5001");;
 

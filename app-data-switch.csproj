@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>app_data_switch</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <PublishSingleFile>true</PublishSingleFile>
+    <CrossGenDuringPublish>false</CrossGenDuringPublish>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,5 +16,4 @@
     <PackageReference Include="MySqlConnector" Version="2.1.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
-
 </Project>
