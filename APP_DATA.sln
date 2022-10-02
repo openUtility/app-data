@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app-data-switch", "SWITCH\app-data-switch.csproj", "{DF193527-D504-41A5-97B6-4E11264E9107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app-data-dashboard", "DASHBOARD\app-data-dashboard.csproj", "{40B22329-0319-4046-B864-7AE76FD308EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF193527-D504-41A5-97B6-4E11264E9107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF193527-D504-41A5-97B6-4E11264E9107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF193527-D504-41A5-97B6-4E11264E9107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF193527-D504-41A5-97B6-4E11264E9107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40B22329-0319-4046-B864-7AE76FD308EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40B22329-0319-4046-B864-7AE76FD308EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40B22329-0319-4046-B864-7AE76FD308EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40B22329-0319-4046-B864-7AE76FD308EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

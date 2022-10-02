@@ -1,0 +1,15 @@
+GET https://localhost:5000/switch/other:prod
+
+### 
+
+GET https://localhost:5000/switch/test
+environment: production
+
+### 
+
+GET https://localhost:5000/switch/t550
+
+
+###
+
+GET http://localhost:5000/switch/test
