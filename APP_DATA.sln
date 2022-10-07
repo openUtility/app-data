@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app-data-switch", "SWITCH\a
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app-data-dashboard", "DASHBOARD\app-data-dashboard.csproj", "{40B22329-0319-4046-B864-7AE76FD308EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "app-data-core", "CORE\app-data-core.csproj", "{C58D9CA7-B20E-46B3-84B4-41FBF372144C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{40B22329-0319-4046-B864-7AE76FD308EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40B22329-0319-4046-B864-7AE76FD308EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40B22329-0319-4046-B864-7AE76FD308EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C58D9CA7-B20E-46B3-84B4-41FBF372144C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C58D9CA7-B20E-46B3-84B4-41FBF372144C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C58D9CA7-B20E-46B3-84B4-41FBF372144C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C58D9CA7-B20E-46B3-84B4-41FBF372144C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,6 @@
 using app_data_switch.config;
+using app_data_switch.Service;
+using app_data_switch.Data;
 using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,8 @@ builder.Services.AddSwaggerGen();
 // add dependencies
 builder.Services.AddTransient<MySqlConnection>(_ => new MySqlConnection(builder.Configuration.GetConnectionString("switch")));
 builder.Services.AddSingleton(builder.Configuration.GetSection("SwitchEndpointConfiguration").Get<SwitchEndpointConfiguration>());
+builder.Services.AddScoped<ISwitchService, SwitchService>();
+builder.Services.AddScoped<ISwitchSource, SwitchSourceTSql>();
 builder.Services.AddHealthChecks();
 
 

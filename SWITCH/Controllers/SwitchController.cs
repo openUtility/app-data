@@ -1,6 +1,7 @@
 using System.Data.Common;
 using System.Text.RegularExpressions;
 using app_data_switch.config;
+using app_data_switch.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MySqlConnector;
@@ -15,21 +16,21 @@ public class SwitchController : ControllerBase {
 
     private readonly IMemoryCache _memoryCache;
 
-    private MySqlConnection _connection;
-
     private SwitchEndpointConfiguration _configruation;
+
+    private ISwitchService _switchService;
 
     private readonly ILogger<SwitchController> _logger;
 
     public SwitchController(
-        ILogger<SwitchController> logger,
         IMemoryCache memoryCache,
-        MySqlConnection connection,
-        SwitchEndpointConfiguration configuration
+        ISwitchService switchService,
+        SwitchEndpointConfiguration configuration,
+        ILogger<SwitchController> logger        
         ) {
         _logger = logger;
         _memoryCache = memoryCache;
-        _connection = connection;
+        _switchService = switchService;
         _configruation = configuration;
 
     }
@@ -86,7 +87,6 @@ public class SwitchController : ControllerBase {
 
     [HttpGet("{id}")]
     public async Task<Boolean> Get(string id) {
-        bool rtnValue = false;
         // security - we want to controll how much memory we are consuming with 
         // memory cache - if the key length > X just kick out. 
         if (String.IsNullOrWhiteSpace(id) || id.Length > this._configruation.allowedIDLength) {
@@ -106,35 +106,15 @@ public class SwitchController : ControllerBase {
 
         // attempt to attach the environment. 
         string switchKey = this.CleanUpKey(id, Request.Headers["environment"]);
+        (bool rtnValue, bool isMissed) = await _switchService.fetch(switchKey);
 
-        // if the memory cache doesn't have the key, then look it up
-        if (!_memoryCache.TryGetValue(switchKey, out rtnValue)) {
-            try {
-                bool successfullQuery = false;
-                await this._connection.OpenAsync();
-
-                using var command = new MySqlCommand("SELECT value FROM switches WHERE switch=@switch;", this._connection);
-                command.Parameters.AddWithValue("switch", switchKey);
-
-                using var reader = await command.ExecuteReaderAsync();
-                while (await reader.ReadAsync()) {
-                    successfullQuery = true;
-                    rtnValue = reader.GetBoolean(0);
-                }
-
-                // additional Check... IF user keeps looking up DB calls that are fruitless
-                // lets lock them out... as they might be tring to do a DOS attack..
-                if (!successfullQuery) {                
-                    badAttempt++;
-                    if (!String.IsNullOrWhiteSpace(ip)) {
-                        _memoryCache.Set(ip, badAttempt, TimeSpan.FromMinutes(this._configruation.CacheLockoutCountForXMinutes));
-                    }
-                }
-            } catch (Exception ex) {
-                this._logger.LogCritical(ex, "Failed Database connection");
-            } 
-            _memoryCache.Set(switchKey, rtnValue, TimeSpan.FromSeconds(this._configruation.CacheQueriesForXSeconds));
+        if (isMissed) {                
+            badAttempt++;
+            if (!String.IsNullOrWhiteSpace(ip)) {
+                _memoryCache.Set(ip, badAttempt, TimeSpan.FromMinutes(this._configruation.CacheLockoutCountForXMinutes));
+            }
         }
+
         return rtnValue;
     }
 }
