@@ -7,6 +7,14 @@ environment: production
 
 ### 
 
+POST https://localhost:5001/switch/lookup
+environment: production
+Content-Type: application/json
+
+["test", "noris-rate", "noris-title"]
+
+### 
+
 GET https://localhost:5000/switch/t550
 
 
@@ -38,4 +46,5 @@ Content-Type: application/x-www-form-urlencoded
 
 name=testing
 &value=false
+
 

@@ -50,7 +50,7 @@ public class SwitchService : ISwitchService {
                     hasFailedCall = true;
                 }
                 rtnList.Add(new Switch(dta.Key, dta.Value ?? false));
-                _memoryCache.Set<bool>(dta.Value, dta.Value ?? false, TimeSpan.FromSeconds(this._configruation.CacheQueriesForXSeconds));
+                _memoryCache.Set<bool>(dta.Key, dta.Value ?? false, TimeSpan.FromSeconds(this._configruation.CacheQueriesForXSeconds));
             }
         }
         return new Tuple<IEnumerable<Switch>, bool>(rtnList, hasFailedCall);

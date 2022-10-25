@@ -17,9 +17,8 @@ public class SwitchSourceTSql : ISwitchSource {
     public async Task<IEnumerable<KeyValuePair<string, bool?>>> fetch(string[] flags) {
         IDictionary<string, bool?> rtnList = flags.ToDictionary(x => x, x => (bool?)null, StringComparer.OrdinalIgnoreCase);
         
-        var flagCount = flags.Select((x,y) => "@switch" + y.ToString())
-                        .Aggregate<string>((x, y) => x + "," + y)
-                        .DefaultIfEmpty();
+        string flagCount = flags.Select((x,y) => "@switch" + y.ToString())
+                        .Aggregate((x, y) => x + "," + y);
         await this._connection.OpenAsync();
 
         using var command = new MySqlCommand(
@@ -35,7 +34,7 @@ public class SwitchSourceTSql : ISwitchSource {
         while (await reader.ReadAsync()) {
             string swt = reader.GetString(0);
             // not checking
-            rtnList[swt] = reader.GetBoolean(0);
+            rtnList[swt] = reader.GetBoolean(1);
         }
         return rtnList;
     }

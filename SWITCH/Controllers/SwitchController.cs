@@ -1,5 +1,6 @@
 using System.Data.Common;
 using System.Text.RegularExpressions;
+using app_data_core.Models;
 using app_data_switch.config;
 using app_data_switch.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -116,5 +117,36 @@ public class SwitchController : ControllerBase {
         }
 
         return rtnValue;
+    }
+
+    [HttpPost("[action]")]
+    public async Task<IEnumerable<Switch>> Lookup(string[] keys) { 
+
+
+        // request check, 
+        // lets make sure this user isn't just brute forcing our keys, or 
+        // attempting a DOS attack...
+        int badAttempt = 0;
+        string ip = this.FindIPAddress();
+        _memoryCache.TryGetValue(ip, out badAttempt);
+
+        if (badAttempt > this._configruation.lockoutAfterXAttempts) {
+            return keys.AsParallel().Select<string, Switch>(x => new Switch(x, false)).ToList();
+        }
+
+        string hdr = Request.Headers["environment"];
+        string[] cleanList = keys.AsParallel().Select<string, string>(x => this.CleanUpKey(x, hdr)).ToArray();
+
+        (IEnumerable<Switch> rtnLst, bool isMissed) = await _switchService.fetch(cleanList);
+
+
+        if (isMissed) {                
+            badAttempt++;
+            if (!String.IsNullOrWhiteSpace(ip)) {
+                _memoryCache.Set(ip, badAttempt, TimeSpan.FromMinutes(this._configruation.CacheLockoutCountForXMinutes));
+            }
+        }
+
+        return rtnLst;
     }
 }
