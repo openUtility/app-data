@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2</TargetFramework>
+    <RootNamespace>app_data_client</RootNamespace>
+    <Authors>Andrew Jarvis</Authors>
+    <Description>Util used for consuming app data content</Description>
+    <PackageId>openutility.app-data-client</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IconUrl>icon.png</IconUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <VersionPrefix>0.0.1</VersionPrefix>
+    <!-- <VersionSuffix>alpha</VersionSuffix> -->
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="images\icon.png" Pack="true" PackagePath="\" />
+    <None Include="docs\readme.md" Pack="true" PackagePath="\" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.6" />
+  </ItemGroup>
+</Project>

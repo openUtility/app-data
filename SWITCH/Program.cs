@@ -30,6 +30,18 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+} else {
+    app.UseExceptionHandler(errorApp => {
+        errorApp.Run(async context => {
+            context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+            context.Response.ContentType = "text/plain";
+            
+            await context.Response.WriteAsync("false");
+            var exceptionHandlerPathFeature = 
+                context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+        });
+    });
 }
 
 // disabled for now

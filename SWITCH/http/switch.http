@@ -1,8 +1,17 @@
-GET https://localhost:5000/switch/other:prod
+// local
+@url=https://localhost:5000
+
+###
+
+GET https://localhost:5001/healthz
+
+###
+
+GET {{url}}/switch/other:prod
 
 ### 
 
-GET https://localhost:5000/switch/test
+GET {{url}}/switch/test
 environment: production
 
 ### 
@@ -15,12 +24,12 @@ Content-Type: application/json
 
 ### 
 
-GET https://localhost:5000/switch/t550
+GET {{url}}/switch/t550
 
 
 ###
 
-GET https://localhost:5000/switch/noris-rate
+GET {{url}}/switch/noris-rate
 
 ###
 
@@ -47,4 +56,10 @@ Content-Type: application/x-www-form-urlencoded
 name=testing
 &value=false
 
+###
 
+POST https://localhost:5443/switch
+Content-Type: application/x-www-form-urlencoded
+
+name=testing
+&value=false
